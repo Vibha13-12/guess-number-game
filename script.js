@@ -1,31 +1,41 @@
-let attempts = 0;
-
 function checkGuess() {
-  const userGuess = Number(document.getElementById("guessInput").value);
-  const message = document.getElementById("message");
-  const attemptsText = document.getElementById("attempts");
+  let userGuess = Number(document.getElementById("guessInput").value);
+  let message = document.getElementById("message");
+  let hint = document.getElementById("hint");
 
-  if (!userGuess) {
-    message.textContent = "Please enter a number!";
+  // Generate NEW random number every time
+  let randomNumber = Math.floor(Math.random() * 100) + 1;
+
+  // Validation
+  if (!userGuess || userGuess < 1 || userGuess > 100) {
+    message.innerText = "⚠️ Enter a number between 1 and 100";
+    hint.innerText = "";
+    hint.className = "";
     return;
   }
 
-  // Generate random number EACH time
-  const randomNumber = Math.floor(Math.random() * 100) + 1;
+  // Show comparison
+  message.innerText = "You: " + userGuess + " | System: " + randomNumber;
 
-  attempts++;
-  attemptsText.textContent = "Attempts: " + attempts;
+  // Reset color
+  hint.className = "";
 
-  if (userGuess === randomNumber) {
-    message.textContent = `🎉 Exact Match! Both got ${randomNumber}`;
+  // Hint logic
+  if (userGuess > randomNumber) {
+    hint.innerText = "📈 Too High";
+    hint.classList.add("high");
+  } else if (userGuess < randomNumber) {
+    hint.innerText = "📉 Too Low";
+    hint.classList.add("low");
   } else {
-    message.textContent = `❌ Not a match. You: ${userGuess}, System: ${randomNumber}`;
+    hint.innerText = "🎉 Correct!";
+    hint.classList.add("correct");
   }
 }
 
 function restartGame() {
-  attempts = 0;
-  document.getElementById("message").textContent = "";
-  document.getElementById("attempts").textContent = "Attempts: 0";
+  document.getElementById("message").innerText = "";
+  document.getElementById("hint").innerText = "";
+  document.getElementById("hint").className = "";
   document.getElementById("guessInput").value = "";
 }

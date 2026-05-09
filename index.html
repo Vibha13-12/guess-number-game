@@ -12,11 +12,11 @@
     <h1>Guess The Number 🎯</h1>
     <p>Pick a number between 1 and 100</p>
 
-    <input type="number" id="guessInput" placeholder="Enter your guess">
+    <input type="number" id="guessInput" placeholder="Enter your guess" min="1" max="100">
     <button onclick="checkGuess()">Submit</button>
 
     <p id="message"></p>
-    <p id="attempts">Attempts: 0</p>
+    <p id="hint" style="font-weight: bold;"></p>
 
     <button onclick="restartGame()">Restart</button>
   </div>
